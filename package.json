@@ -47,13 +47,16 @@
     "pino-pretty": "^10.3.1",
     "prettier": "^3.2.4",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vite": "^5.2.7"
   },
   "dependencies": {
     "@adonisjs/auth": "^9.1.1",
     "@adonisjs/core": "^6.2.2",
     "@adonisjs/cors": "^2.2.1",
     "@adonisjs/lucid": "^20.1.0",
+    "@adonisjs/session": "^7.3.0",
+    "@adonisjs/vite": "^2.0.2",
     "@vinejs/vine": "^1.8.0",
     "edge.js": "^6.0.2",
     "luxon": "^3.4.4",
