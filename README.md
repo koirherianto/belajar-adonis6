@@ -1,9 +1,12 @@
 # Template CRUD & Auth Adonis 6
 
 ## Tutorial
-1. Give Start Please
-1. setting .env
-2. node ace make:migration run
+1. please give github a star
+2. clone this
+3. setting .env
+4. npm instal
+5. node ace make:migration run
+6. node ace serve --watch 
 
 # Explain
 
