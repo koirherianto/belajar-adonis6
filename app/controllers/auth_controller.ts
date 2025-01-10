@@ -11,7 +11,7 @@ export default class AuthController {
     const isEmailExist = await User.findBy('email', request.input('email'))
 
     if (isEmailExist) {
-      response.abort('Email Sudah Terdaftar')
+      response.abort('Email Sudah Terdaftarr')
     }
 
     const user = await User.create({
@@ -35,7 +35,10 @@ export default class AuthController {
     const user = await User.findBy('email', email)
 
     if (!user || user === null) {
-      response.abort('Email Atau Password Salah')
+      return response.status(401).json({
+        success: false,
+        message: 'Email Atau Password Salah',
+      })
     }
 
     const isVerify = await hash.verify(user!.password, password)
@@ -43,13 +46,25 @@ export default class AuthController {
     if (isVerify) {
       const token = await User.accessTokens.create(user!)
 
-      response.status(200).json({
+      return response.status(200).json({
         success: true,
         data: user,
         token: token,
       })
     } else {
-      response.abort('Email Atau Password Salah')
+      return response.status(401).json({
+        success: false,
+        message: 'Email Atau Password Salah',
+      })
     }
+  }
+
+  async me({ auth, response }: HttpContext) {
+    const user = auth.user!
+
+    return response.status(200).json({
+      success: true,
+      data: user,
+    })
   }
 }

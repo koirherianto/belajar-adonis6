@@ -13,17 +13,23 @@ import { middleware } from '#start/kernel'
 const AuthController = () => import('#controllers/auth_controller')
 const PostsController = () => import('#controllers/posts_controller')
 
-// router.get('/', async () => {
-//   return {
-//     hello: 'world',
-//   }
-// })
+router.post('/tes', async () => {
+  return {
+    hello: 'world tes',
+  }
+})
+
+router.on('/').render('home')
+
 
 router.group(() => {
     router.post('/register', [AuthController, 'register'])
     router.post('/login', [AuthController, 'login'])
 
     router.group(() => {
+        router.get('/me', [AuthController, 'me'])
+
+        router.get('/posts', [PostsController, 'index'])
         router.post('/posts', [PostsController, 'create'])
         router.get('/posts/:id', [PostsController, 'getById'])
         router.put('/posts/:id', [PostsController, 'update'])
@@ -32,4 +38,3 @@ router.group(() => {
 }).prefix('api')
 
 
-router.on('/').render('pages/home')

@@ -4,17 +4,28 @@ import type { HttpContext } from '@adonisjs/core/http'
 import { createPostValidator, updatePostValidator } from '#validators/post'
 
 export default class PostsController {
+  async index({ response }: HttpContext) {
+    const currentUser = response.ctx!.auth.user
+
+    const posts = await currentUser!.related('posts').query()
+
+    response.status(200).json({
+      success: true,
+      data: posts,
+    })
+  }
+
   async create({ request, response }: HttpContext) {
     await request.validateUsing(createPostValidator)
 
-    const userId = request.input('user_id')
+    const userId = response.ctx!.auth.user!.id
     const title = request.input('title')
     const content = request.input('content')
 
     const user = await User.find(userId)
 
     if (!user) {
-      response.status(404).json({
+      return response.status(404).json({
         success: false,
         message: 'User not found',
       })
@@ -26,7 +37,7 @@ export default class PostsController {
       content,
     })
 
-    response.status(201).json({
+    return response.status(201).json({
       success: true,
       data: post,
     })
@@ -45,7 +56,8 @@ export default class PostsController {
     await request.validateUsing(updatePostValidator)
 
     const { title, content } = request.only(['title', 'content'])
-    const userId = request.input('user_id')
+    const userId = request.input('user_id') // ambil data lewat parameter
+    // const userId = response.ctx!.auth.user!.id
 
     const user = await User.find(userId)
 
