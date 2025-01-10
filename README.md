@@ -4,7 +4,7 @@
 1. please give github a star
 2. clone this
 3. setting .env
-4. npm instal
+4. npm install
 5. node ace make:migration run
 6. node ace serve --watch 
 
